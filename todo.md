@@ -17,6 +17,6 @@
 - [x] Add a downloadable-model lifecycle with size, storage, and offline readiness states
 - [x] Implement an on-device inference adapter with graceful unavailable-model fallback
 - [x] Document on-device model licensing, attribution, and model card requirements
-- [ ] Resolve checkpoint-blocking app icon asset size and save a release checkpoint
-- [ ] Verify Expo native configuration and automated project checks after repair
-- [ ] Commit, rebase, and push all remaining Open Assistant changes to GitHub
+- [x] Resolve checkpoint-blocking app icon asset size and save a release checkpoint
+- [x] Verify Expo native configuration and automated project checks after repair
+- [x] Commit, rebase, and push all remaining Open Assistant changes to GitHub
