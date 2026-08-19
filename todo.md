@@ -20,3 +20,11 @@
 - [x] Resolve checkpoint-blocking app icon asset size and save a release checkpoint
 - [x] Verify Expo native configuration and automated project checks after repair
 - [x] Commit, rebase, and push all remaining Open Assistant changes to GitHub
+- [x] Extract verified pharma n8n error patterns from the referenced task
+- [x] Extend the repository repair queue with relevant n8n validation checks
+- [ ] Configure combined push/PR validation and recurring failure-review workflow
+- [ ] Audit current git branch, remotes, workflows, diffs, and open pull requests for prioritized repositories
+- [x] Map only project-relevant CLI, API, connector, and environment integrations
+- [x] Validate relevant Gemini, Google, Antigravity, and observability integrations where implemented
+- [x] Run build, lint, type, unit, integration, and safe runtime checks for each prioritized repository
+- [ ] Document reproducible blockers that require unavailable external permissions rather than bypassing them
