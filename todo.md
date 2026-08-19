@@ -1,0 +1,22 @@
+# Project TODO
+
+- [x] Document feasible free/open-source AI provider modes and their limits
+- [x] Define a user-approved automation model and permission boundaries
+- [x] Build assistant conversation interface with local history
+- [x] Add microphone permission and voice input flow
+- [x] Add text-to-speech response controls
+- [x] Build activity history and action audit trail
+- [x] Build automation management and review-confirmation flow
+- [x] Build privacy, data deletion, and provider settings
+- [x] Add accessibility labels, error states, and offline-safe feedback
+- [x] Create custom Open Assistant icon and configure app branding
+- [x] Add automated unit tests for local state and action confirmation
+- [x] Prepare Play Store metadata, privacy disclosure, and release checklist
+- [x] Create GitHub repository and push the complete source code
+- [x] Evaluate an Expo-compatible on-device model runtime and minimum supported Android device profile
+- [x] Add a downloadable-model lifecycle with size, storage, and offline readiness states
+- [x] Implement an on-device inference adapter with graceful unavailable-model fallback
+- [x] Document on-device model licensing, attribution, and model card requirements
+- [ ] Resolve checkpoint-blocking app icon asset size and save a release checkpoint
+- [ ] Verify Expo native configuration and automated project checks after repair
+- [ ] Commit, rebase, and push all remaining Open Assistant changes to GitHub

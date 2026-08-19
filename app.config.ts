@@ -32,7 +32,7 @@ const env = {
   appSlug: "free-ai-assistant",
   // S3 URL of the app logo - set this to the URL returned by generate_image when creating custom logo
   // Leave empty to use the default icon from assets/images/icon.png
-  logoUrl: "",
+  logoUrl: "/manus-storage/open-assistant-icon_4c2886c0.png",
   scheme: schemeFromBundleId,
   iosBundleId: bundleId,
   androidPackage: bundleId,
@@ -64,7 +64,7 @@ const config: ExpoConfig = {
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
     package: env.androidPackage,
-    permissions: ["POST_NOTIFICATIONS"],
+    permissions: ["POST_NOTIFICATIONS", "android.permission.RECORD_AUDIO", "android.permission.MODIFY_AUDIO_SETTINGS"],
     intentFilters: [
       {
         action: "VIEW",
@@ -86,6 +86,9 @@ const config: ExpoConfig = {
   },
   plugins: [
     "expo-router",
+    "expo-asset",
+    "expo-font",
+    "expo-web-browser",
     [
       "expo-audio",
       {
@@ -116,8 +119,16 @@ const config: ExpoConfig = {
       {
         android: {
           buildArchs: ["armeabi-v7a", "arm64-v8a"],
-          minSdkVersion: 24,
+          minSdkVersion: 33,
         },
+      },
+    ],
+    [
+      "react-native-audio-api",
+      {
+        "iosMicrophonePermission": "Allow $(PRODUCT_NAME) to access your microphone for private on-device transcription.",
+        "androidPermissions": ["android.permission.RECORD_AUDIO", "android.permission.MODIFY_AUDIO_SETTINGS"],
+        "androidForegroundService": false,
       },
     ],
   ],
