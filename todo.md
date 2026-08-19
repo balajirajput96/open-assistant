@@ -23,6 +23,7 @@
 - [x] Extract verified pharma n8n error patterns from the referenced task
 - [x] Extend the repository repair queue with relevant n8n validation checks
 - [ ] Configure combined push/PR validation and recurring failure-review workflow
+- [ ] Publish Open Assistant before activating the daily 09:00 IST failure-review schedule
 - [ ] Audit current git branch, remotes, workflows, diffs, and open pull requests for prioritized repositories
 - [x] Map only project-relevant CLI, API, connector, and environment integrations
 - [x] Validate relevant Gemini, Google, Antigravity, and observability integrations where implemented
