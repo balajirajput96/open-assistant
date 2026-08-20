@@ -25,8 +25,8 @@
 - [ ] Configure combined push/PR validation and recurring failure-review workflow
 - [ ] Publish Open Assistant before activating the daily 09:00 IST failure-review schedule
 - [ ] Register and verify the daily 09:00 IST failure-review schedule after deployment
-- [ ] Audit current git branch, remotes, workflows, diffs, and open pull requests for prioritized repositories
+- [x] Audit current git branch, remotes, workflows, diffs, and open pull requests for prioritized repositories
 - [x] Map only project-relevant CLI, API, connector, and environment integrations
 - [x] Validate relevant Gemini, Google, Antigravity, and observability integrations where implemented
 - [x] Run build, lint, type, unit, integration, and safe runtime checks for each prioritized repository
-- [ ] Document reproducible blockers that require unavailable external permissions rather than bypassing them
+- [x] Document reproducible blockers that require unavailable external permissions rather than bypassing them
