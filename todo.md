@@ -31,10 +31,15 @@
 - [x] Run build, lint, type, unit, integration, and safe runtime checks for each prioritized repository
 - [x] Document reproducible blockers that require unavailable external permissions rather than bypassing them
 - [x] Inventory recoverable repository history, workflows, and safe reusable maintenance procedures
-- [ ] Select a cost-safe architecture for the requested 2,400 hourly maintenance cycles
-- [ ] Implement the selected persistent maintenance workflow with bounded retries and durable state
+- [x] Select the user-approved always-on architecture for the requested 2,400 hourly maintenance cycles
+- [x] Implement the selected persistent maintenance workflow with bounded retries and durable state
 - [ ] Validate scheduled maintenance behaviour without modifying external systems or secrets
 - [x] Assess always-on hosting compatibility, resource ceiling, and operational cost
 - [x] Implement durable maintenance state and bounded GitHub health/recovery workflow
 - [x] Validate always-on worker behaviour and safe external-action guardrails
 - [ ] Activate persistent hosting only after explicit deployment/cost confirmation
+- [x] Audit current local and remote histories, workflows, recoverable scripts, runtime logs, and pending work
+- [x] Reconcile maintenance run state into a durable machine-readable execution record
+- [x] Add deterministic GitHub maintenance workflow with bounded retries and no secret leakage
+- [ ] Validate maintenance workflow, state persistence, GitHub Actions, and recovery controls end-to-end
+- [ ] Synchronize verified maintenance state to GitHub and create a restore checkpoint
