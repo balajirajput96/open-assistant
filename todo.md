@@ -43,3 +43,11 @@
 - [x] Add deterministic GitHub maintenance workflow with bounded retries and no secret leakage
 - [x] Validate maintenance workflow, state persistence, GitHub Actions, and recovery controls end-to-end
 - [ ] Synchronize verified maintenance state to GitHub and create a restore checkpoint
+- [x] Verify the proposed Kimi bot installer and supported deployment path before any credentialed deployment
+- [x] Cancel the Kimi cloud login and provider-managed deployment flow
+- [x] Research legitimate free self-hosted AI assistant alternatives from official sources
+- [ ] Create a free-tier-compatible Hugging Face Space after user completes GitHub OAuth
+- [x] Verify Hugging Face MCP server and Gemini extension compatibility before installation
+- [x] Verify Kimi-K3 model card, license, and free deployment feasibility
+- [ ] Verify Google Colab access and prepare a user-authorized Drive mount for model downloads
+- [x] Audit GPT-OSS-120B and balaji966 bucket feasibility before any model download or Colab setup

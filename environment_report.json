@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-08-21",
+  "scope": "Pre-download feasibility audit for openai/gpt-oss-120b",
+  "sandbox": {
+    "os": "Linux 6.1.102 x86_64",
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.50GHz",
+    "cpu_cores": 6,
+    "memory_total_bytes": 4132876288,
+    "memory_available_bytes": 2868289536,
+    "disk_total_bytes": 42385690624,
+    "disk_used_bytes": 10958553088,
+    "disk_available_bytes": 31410360320,
+    "gpu": null,
+    "gpu_detection": "nvidia-smi unavailable"
+  },
+  "cli_status": {
+    "git": "available",
+    "github_cli": "available_and_authenticated",
+    "gcloud": "missing",
+    "gemini": "missing",
+    "antigravity": "missing",
+    "jules": "missing",
+    "huggingface_cli": "missing",
+    "docker": "missing",
+    "ollama": "missing"
+  },
+  "colab_and_drive": {
+    "colab_page_reachable": true,
+    "google_account_session": "signed_out",
+    "drive_mount": "not_attempted_without_user_authorized_google_sign_in"
+  },
+  "model": {
+    "repository": "https://huggingface.co/openai/gpt-oss-120b",
+    "license": "Apache-2.0",
+    "model_card_parameter_count": "117B",
+    "weight_format": "MXFP4 with BF16 components",
+    "documented_single_gpu_requirement": "80GB-class GPU for the optimized 120B implementation",
+    "download_status": "not_started",
+    "sandbox_feasibility": "not feasible: no GPU, approximately 2.7GB available RAM, and approximately 29.3GiB available disk"
+  },
+  "repository_audit": {
+    "user_provided_path": "balaji966/gpt-oss-120b-bucket",
+    "user_provided_path_status": "not found through authenticated GitHub API",
+    "accessible_related_repository": "https://github.com/balajirajput96/gpt-oss",
+    "accessible_repository_status": "public Apache-2.0 source repository; no model weights downloaded during audit"
+  },
+  "credential_boundary": {
+    "hugging_face_api_key_required_for_this_audit": false,
+    "hugging_face_api_key_status": "not requested; public model metadata and public repository inspection succeeded without it"
+  }
+}
