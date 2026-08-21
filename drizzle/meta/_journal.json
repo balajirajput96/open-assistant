@@ -15,6 +15,13 @@
       "when": 1787279148624,
       "tag": "0001_sudden_argent",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787283227249,
+      "tag": "0002_aspiring_human_torch",
+      "breakpoints": true
     }
   ]
 }

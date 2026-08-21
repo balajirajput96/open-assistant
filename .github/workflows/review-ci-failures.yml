@@ -1,0 +1,79 @@
+name: Review CI failures
+
+on:
+  schedule:
+    # 09:00 Asia/Kolkata (UTC+05:30). GitHub Actions cron is UTC.
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: review-ci-failures
+  cancel-in-progress: false
+
+jobs:
+  review-latest-workflow-results:
+    name: Review latest workflow results
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Inspect only the newest run of each workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          failures=0
+          checked=0
+          {
+            echo "## Daily CI failure review"
+            echo
+            echo "This workflow is read-only: it does not push, open pull requests, change secrets, or trigger repairs."
+            echo
+            echo "| Workflow | Latest conclusion | Updated | Run |"
+            echo "| --- | --- | --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          while IFS=$'\t' read -r workflow_id workflow_name; do
+            [ -n "$workflow_id" ] || continue
+            latest_run="$(gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow "$workflow_id" \
+              --limit 1 \
+              --json conclusion,updatedAt,url \
+              --jq '.[0] // empty')"
+
+            if [ -z "$latest_run" ]; then
+              printf '| %s | no run | — | — |\n' "$workflow_name" >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+
+            conclusion="$(jq -r '.conclusion // "in_progress"' <<< "$latest_run")"
+            updated_at="$(jq -r '.updatedAt // "unknown"' <<< "$latest_run")"
+            run_url="$(jq -r '.url // ""' <<< "$latest_run")"
+            printf '| %s | %s | %s | [details](%s) |\n' "$workflow_name" "$conclusion" "$updated_at" "$run_url" >> "$GITHUB_STEP_SUMMARY"
+            checked=$((checked + 1))
+
+            case "$conclusion" in
+              failure|cancelled|timed_out|action_required|startup_failure)
+                failures=$((failures + 1))
+                ;;
+            esac
+          done < <(gh workflow list \
+            --repo "$GITHUB_REPOSITORY" \
+            --all \
+            --json id,name \
+            --jq '.[] | select(.name != "Review CI failures") | [.id, .name] | @tsv')
+
+          {
+            echo
+            echo "Checked **${checked}** workflow(s); found **${failures}** latest failed/cancelled result(s)."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$failures" -gt 0 ]; then
+            echo "::warning::${failures} workflow(s) need verified human-guided repair review. No changes were made."
+          fi

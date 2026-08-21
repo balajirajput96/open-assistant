@@ -37,3 +37,22 @@ export const maintenanceRuns = mysqlTable("maintenanceRuns", {
 
 export type MaintenanceRun = typeof maintenanceRuns.$inferSelect;
 export type InsertMaintenanceRun = typeof maintenanceRuns.$inferInsert;
+
+/**
+ * A restart-safe ledger for the explicitly bounded maintenance service.
+ * A cycle is reserved before any external request so no run is repeated after a
+ * process restart, and completed only after its compact result is persisted.
+ */
+export const maintenanceCycles = mysqlTable("maintenanceCycles", {
+  id: int("id").autoincrement().primaryKey(),
+  cycleNumber: int("cycleNumber").notNull().unique(),
+  status: mysqlEnum("status", ["started", "completed"]).notNull(),
+  resultStatus: mysqlEnum("resultStatus", ["success", "blocked", "error"]),
+  summary: text("summary"),
+  repositoriesChecked: int("repositoriesChecked"),
+  failedRepositories: int("failedRepositories"),
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+});
+
+export type MaintenanceCycle = typeof maintenanceCycles.$inferSelect;

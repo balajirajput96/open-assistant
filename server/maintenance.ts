@@ -32,10 +32,13 @@ type FetchResponse = {
 
 export type FetchLike = (input: string, init?: RequestInit) => Promise<FetchResponse>;
 type PersistRun = (run: MaintenanceRunResult) => Promise<void>;
+type ReserveCycle = (maxCycles: number) => Promise<{ cycleNumber: number } | null>;
+type CompleteCycle = (cycleNumber: number, run: MaintenanceRunResult) => Promise<void>;
 
 const MAX_ATTEMPTS = 2;
 const MIN_INTERVAL_MS = 15 * 60 * 1000;
 const DEFAULT_INTERVAL_MS = 60 * 60 * 1000;
+export const DEFAULT_MAX_MAINTENANCE_CYCLES = 2400;
 
 function delay(milliseconds: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
@@ -180,6 +183,9 @@ export class MaintenanceWorker {
       repositories?: string[];
       fetchImpl?: FetchLike;
       persistRun?: PersistRun;
+      reserveCycle?: ReserveCycle;
+      completeCycle?: CompleteCycle;
+      maxCycles?: number;
     },
   ) {}
 
@@ -187,21 +193,33 @@ export class MaintenanceWorker {
     if (this.running) return null;
     this.running = true;
     try {
+      const reserveCycle = this.options.reserveCycle ?? db.reserveMaintenanceCycle;
+      const reservation = await reserveCycle(this.options.maxCycles ?? DEFAULT_MAX_MAINTENANCE_CYCLES);
+      if (!reservation) {
+        const result: MaintenanceRunResult = {
+          status: "blocked",
+          repositoriesChecked: 0,
+          failedRepositories: 0,
+          summary: "Maintenance cycle limit is exhausted or durable state is unavailable; no GitHub requests were made.",
+          details: [],
+        };
+        console.warn(`[Maintenance] ${result.status}: ${result.summary}`);
+        return result;
+      }
+
       const result = await runMaintenanceCheck({
         token: this.options.token,
         repositories: this.options.repositories,
         fetchImpl: this.options.fetchImpl,
       });
-      const persist = this.options.persistRun ?? (async (run: MaintenanceRunResult) => {
-        await db.recordMaintenanceRun({
-          status: run.status,
-          repositoriesChecked: run.repositoriesChecked,
-          failedRepositories: run.failedRepositories,
-          summary: run.summary,
+      if (this.options.persistRun) await this.options.persistRun(result);
+      const completeCycle = this.options.completeCycle ?? (async (cycleNumber, run) => {
+        await db.completeMaintenanceCycle(cycleNumber, {
+          ...run,
           details: JSON.stringify(run.details),
         });
       });
-      await persist(result);
+      await completeCycle(reservation.cycleNumber, result);
       console.info(`[Maintenance] ${result.status}: ${result.summary}`);
       return result;
     } finally {
@@ -226,6 +244,7 @@ export function startMaintenanceWorker() {
   const worker = new MaintenanceWorker({
     enabled: process.env.MAINTENANCE_ENABLED === "true",
     token: process.env.GITHUB_MAINTENANCE_TOKEN,
+    maxCycles: Number.parseInt(process.env.MAINTENANCE_MAX_CYCLES ?? "", 10) || DEFAULT_MAX_MAINTENANCE_CYCLES,
   });
   worker.start();
   return worker;

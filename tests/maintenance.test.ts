@@ -38,16 +38,40 @@ describe("maintenance worker", () => {
 
   it("prevents overlapping runs and persists a completed check", async () => {
     const persistRun = vi.fn(async () => undefined);
+    const reserveCycle = vi.fn(async () => ({ cycleNumber: 1 }));
+    const completeCycle = vi.fn(async () => undefined);
     const worker = new MaintenanceWorker({
       token: "test-token",
       repositories: ["owner/repository"],
       fetchImpl: vi.fn(async () => jsonResponse({ workflow_runs: [{ conclusion: "success" }] })) as never,
       persistRun,
+      reserveCycle,
+      completeCycle,
     });
 
     const [first, second] = await Promise.all([worker.runOnce(), worker.runOnce()]);
     expect(first?.status).toBe("success");
     expect(second).toBeNull();
+    expect(reserveCycle).toHaveBeenCalledWith(2400);
     expect(persistRun).toHaveBeenCalledTimes(1);
+    expect(completeCycle).toHaveBeenCalledWith(1, expect.objectContaining({ status: "success" }));
+  });
+
+  it("does not contact GitHub when durable cycle state cannot be reserved", async () => {
+    const fetchImpl = vi.fn();
+    const completeCycle = vi.fn(async () => undefined);
+    const worker = new MaintenanceWorker({
+      token: "test-token",
+      repositories: ["owner/repository"],
+      fetchImpl,
+      reserveCycle: vi.fn(async () => null),
+      completeCycle,
+    });
+
+    const result = await worker.runOnce();
+    expect(result?.status).toBe("blocked");
+    expect(result?.repositoriesChecked).toBe(0);
+    expect(fetchImpl).not.toHaveBeenCalled();
+    expect(completeCycle).not.toHaveBeenCalled();
   });
 });
