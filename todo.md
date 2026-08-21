@@ -51,3 +51,5 @@
 - [x] Verify Kimi-K3 model card, license, and free deployment feasibility
 - [ ] Verify Google Colab access and prepare a user-authorized Drive mount for model downloads
 - [x] Audit GPT-OSS-120B and balaji966 bucket feasibility before any model download or Colab setup
+- [ ] Build the Colab-and-Drive-only GPT-OSS workspace independently of the mobile app
+- [x] Create an idempotent Colab Drive bootstrap notebook with hardware/storage gates and no-download safeguards
