@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 
+const credentialTest = process.env.GITHUB_MAINTENANCE_TOKEN ? it : it.skip;
+
 describe("GitHub maintenance credential", () => {
-  it("authenticates against the GitHub user endpoint", async () => {
+  credentialTest("authenticates against the GitHub user endpoint when configured", async () => {
     const token = process.env.GITHUB_MAINTENANCE_TOKEN;
     expect(token, "GITHUB_MAINTENANCE_TOKEN must be configured").toBeTruthy();
 

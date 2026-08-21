@@ -6,7 +6,7 @@ The worker performs a read-only GitHub Actions health check for the prioritized 
 
 ## Safety boundaries
 
-The worker is disabled unless `MAINTENANCE_ENABLED=true` is configured server-side. It uses a server-only GitHub token, makes only GitHub Actions read requests, limits retries to two attempts for transient server failures, prevents overlapping runs, and enforces a minimum fifteen-minute interval. The default interval is one hour.
+The worker is disabled unless `MAINTENANCE_ENABLED=true` is configured server-side. It uses a server-only GitHub token, makes only GitHub Actions read requests, limits retries to two attempts for transient server failures, prevents overlapping runs, and enforces a minimum fifteen-minute interval. The default interval is one hour. Credential and real GitHub integration tests run where the token is configured; GitHub Actions keeps them skipped unless an Actions secret is deliberately added, while deterministic unit coverage remains active.
 
 ## Deployment requirement
 
