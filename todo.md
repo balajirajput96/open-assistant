@@ -30,3 +30,11 @@
 - [x] Validate relevant Gemini, Google, Antigravity, and observability integrations where implemented
 - [x] Run build, lint, type, unit, integration, and safe runtime checks for each prioritized repository
 - [x] Document reproducible blockers that require unavailable external permissions rather than bypassing them
+- [x] Inventory recoverable repository history, workflows, and safe reusable maintenance procedures
+- [ ] Select a cost-safe architecture for the requested 2,400 hourly maintenance cycles
+- [ ] Implement the selected persistent maintenance workflow with bounded retries and durable state
+- [ ] Validate scheduled maintenance behaviour without modifying external systems or secrets
+- [x] Assess always-on hosting compatibility, resource ceiling, and operational cost
+- [x] Implement durable maintenance state and bounded GitHub health/recovery workflow
+- [x] Validate always-on worker behaviour and safe external-action guardrails
+- [ ] Activate persistent hosting only after explicit deployment/cost confirmation
