@@ -22,7 +22,7 @@
 - [x] Commit, rebase, and push all remaining Open Assistant changes to GitHub
 - [x] Extract verified pharma n8n error patterns from the referenced task
 - [x] Extend the repository repair queue with relevant n8n validation checks
-- [ ] Configure combined push/PR validation and recurring failure-review workflow
+- [x] Configure combined push/PR validation and recurring failure-review workflow
 - [ ] Publish Open Assistant before activating the daily 09:00 IST failure-review schedule
 - [ ] Register and verify the daily 09:00 IST failure-review schedule after deployment
 - [x] Audit current git branch, remotes, workflows, diffs, and open pull requests for prioritized repositories
@@ -41,5 +41,5 @@
 - [x] Audit current local and remote histories, workflows, recoverable scripts, runtime logs, and pending work
 - [x] Reconcile maintenance run state into a durable machine-readable execution record
 - [x] Add deterministic GitHub maintenance workflow with bounded retries and no secret leakage
-- [ ] Validate maintenance workflow, state persistence, GitHub Actions, and recovery controls end-to-end
+- [x] Validate maintenance workflow, state persistence, GitHub Actions, and recovery controls end-to-end
 - [ ] Synchronize verified maintenance state to GitHub and create a restore checkpoint
